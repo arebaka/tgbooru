@@ -22,6 +22,9 @@ list_of_commands: |-
   /delete to delete the media from your booru
   /info to display some information about the media
 
+inline:
+  switch_pm: Settings
+
 callbacks:
   start:
     responses:
@@ -40,7 +43,7 @@ commands:
         To remove the media from your booru, reply to it with a command /delete.
         To display some information about the media, reply to it with a command /info.
         Finally, to see all commands, send /help
-        Simple as that. I strongly advise against storing your real photos and other person's nudes here. Message @arelive about all bugs and suggestions.
+        Simple as that. I strongly advise against storing your real photos and other person's nudes here. Message @arelive about all bugs and issues.
 
   help:
     responses:

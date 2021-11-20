@@ -1,14 +1,11 @@
-const path = require("path");
-const fs   = require("fs");
-
-const { Telegraf, Markup } = require("telegraf");
+const Telegraf = require("telegraf").Telegraf;
 
 const db     = require("./db");
 const config = require("./config");
 
-const commands  = require("./commands");
-const callbacks = require("./callbacks");
-const i18n      = require("./i18n");
+const middlewares = require("./middlewares");
+const handlers    = require("./handlers");
+const commands    = require("./commands");
 
 
 
@@ -21,39 +18,12 @@ class Bot
         this.username = null;
         this.bot      = new Telegraf(this.token);
 
-        this.bot.use(async (ctx, next) => {
-            try {
-                let user = ctx.from && await db.setUser(
-                    ctx.from.id, ctx.from.username, ctx.from.first_name, ctx.from.last_name);
+        this.bot.use(middlewares.updateUser);
 
-                ctx.from._ = i18n[user.lang];
+        this.bot.on("callback_query", handlers.callback);
+        this.bot.on("inline_query",   handlers.inline);
 
-                await next();
-            }
-            catch (err) {
-                console.error(err);
-            }
-        });
-
-        this.bot.on("callback_query", async ctx => {
-            const query = ctx.update.callback_query;
-            const data  = query.data.split(':');
-
-            switch (data[0]) {
-                case "start": return callbacks.start(ctx, data);
-                case "lang":  return callbacks.lang(ctx, data);
-                default:      return ctx.answerCbQuery(ctx.from._.errors.unknown_callback, true);
-            }
-        });
-
-        this.bot.start(async ctx => {
-            const markup = Markup.inlineKeyboard([
-                    Markup.button.callback("English", "start:eng"),
-                    Markup.button.callback("Русский", "start:rus")
-                ]);
-
-            ctx.replyWithMarkdown("Choose the language\nВыберите язык", markup);
-        });
+        this.bot.start(commands.start)
 
         this.bot.command("help",   commands.help);
         this.bot.command("lang",   commands.lang);
@@ -66,9 +36,6 @@ class Bot
 //        this.bot.command("retag",  commands.retag);
 //        this.bot.command("stats",  commands.stats);
 
-        this.bot.on("inline_query", async ctx => {
-
-        });
     }
 
     async start()

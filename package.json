@@ -1,6 +1,6 @@
 {
   "name": "tgbooru",
-  "version": "0.5",
+  "version": "0.6",
   "description": "a builtin personal booru for Telegram",
   "bin": "./start.sh",
   "main": "index.js",
@@ -28,7 +28,7 @@
     "media",
     "images",
     "gif",
-    "video",
+    "video"
   ],
   "files": [
     "LICENSE",
@@ -39,6 +39,8 @@
     "config.js",
     "bot.js",
     "db/*",
+    "middlewares/*",
+    "handlers/*",
     "callbacks/*",
     "commands/*",
     "i18n/*"
@@ -49,6 +51,7 @@
     "serverline": "^1.5.0",
     "telegraf": "^4.4.1",
     "toml": "^3.0.0",
+    "uuid": "^8.3.2",
     "yaml": "^1.10.2"
   }
 }

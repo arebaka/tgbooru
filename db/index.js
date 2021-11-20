@@ -95,25 +95,6 @@ class DBHelper
         return user.rows.length ? user.rows[0] : null;
     }
 
-    async getUserMediaByTags(userId, tags)
-    {
-        const media = await this.pool.query(`
-                select distinct on (mu.file_uid)
-                    mu.type, mu.file_uid, mu.file_id, mu.add_dt
-                from media_of_users mu
-                join tags_of_media tm
-                on tm.media_id = mu.id
-                join tags t
-                on t.id = tm.tag_id
-                where user_id = $1
-                and t.tag in $2
-            `, [
-                userId, tags
-            ]);
-
-        return media.rows;
-    }
-
     async getMedia(userId, fileUid)
     {
         const media = await this.pool.query(`
@@ -205,6 +186,43 @@ class DBHelper
                     mediaId, tag.id
                 ]);
         }
+    }
+
+    async getAllMedias(userId, limit)
+    {
+        const medias = await this.pool.query(`
+                select type, file_id, file_uid, add_dt
+                from media_of_users
+                where user_id = $1
+                order by add_dt desc
+                limit $2
+            `, [
+                userId, limit
+            ]);
+
+        return medias.rows;
+    }
+
+    async findMedias(userId, tags, limit)
+    {
+        const medias = await this.pool.query(`
+                select distinct on (mu.file_id)
+                    mu.type, mu.file_id, mu.file_uid, mu.add_dt
+                from media_of_users mu
+                join tags_of_media tm
+                on tm.media_id = mu.id
+                join tags t
+                on t.id = tm.tag_id
+                where mu.user_id = $1
+                and t.tag = any($2::varchar[])
+                group by mu.id
+                having count(t.tag) = $3
+                limit $4
+            `, [
+                userId, tags, tags.length, limit
+            ]);
+
+        return medias.rows;
     }
 }
 

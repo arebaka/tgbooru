@@ -8,3 +8,4 @@ uri = "postgres://localhost/tgbooru"
 
 [limits]
 max_n_tags_for_media = 20
+max_result_size      = 50

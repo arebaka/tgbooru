@@ -1,4 +1,5 @@
 module.exports = {
+	start:  require("./start"),
 	help:   require("./help"),
 	lang:   require("./lang"),
 	add:    require("./add"),
