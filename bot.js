@@ -20,8 +20,9 @@ class Bot
 
         this.bot.use(middlewares.updateUser);
 
-        this.bot.on("callback_query", handlers.callback);
-        this.bot.on("inline_query",   handlers.inline);
+        this.bot.on("callback_query",       handlers.callback);
+        this.bot.on("inline_query",         handlers.inline);
+        this.bot.on("chosen_inline_result", handlers.chosen_inline);
 
         this.bot.start(commands.start)
 

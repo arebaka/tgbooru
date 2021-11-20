@@ -23,7 +23,8 @@ CREATE TABLE IF NOT EXISTS public.media_of_users (
     type media_type NOT NULL,
     file_uid character varying(32) NOT NULL,
     file_id character varying(128) NOT NULL,
-    add_dt timestamp without time zone DEFAULT current_timestamp NOT NULL
+    add_dt timestamp without time zone DEFAULT current_timestamp NOT NULL,
+    last_use_dt timestamp without time zone DEFAULT current_timestamp NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS public.tags_of_media (

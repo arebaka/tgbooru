@@ -13,7 +13,7 @@ module.exports = async ctx => {
 
     const res = medias.map(m => ({
         type: m.type == "animation" ? "mpeg4_gif" : m.type,
-        id:   m.file_uid + uuidv4(),
+        id:   `${m.file_uid}.${uuidv4()}`,
         [{
             photo:     "photo_file_id",
             animation: "mpeg4_file_id",

@@ -194,7 +194,7 @@ class DBHelper
                 select type, file_id, file_uid, add_dt
                 from media_of_users
                 where user_id = $1
-                order by add_dt desc
+                order by last_use_dt desc
                 limit $2
             `, [
                 userId, limit
@@ -206,8 +206,7 @@ class DBHelper
     async findMedias(userId, tags, limit)
     {
         const medias = await this.pool.query(`
-                select distinct on (mu.file_id)
-                    mu.type, mu.file_id, mu.file_uid, mu.add_dt
+                select mu.type, mu.file_id, mu.file_uid, mu.add_dt
                 from media_of_users mu
                 join tags_of_media tm
                 on tm.media_id = mu.id
@@ -217,12 +216,25 @@ class DBHelper
                 and t.tag = any($2::varchar[])
                 group by mu.id
                 having count(t.tag) = $3
+                order by last_use_dt desc
                 limit $4
             `, [
                 userId, tags, tags.length, limit
             ]);
 
         return medias.rows;
+    }
+
+    async useMedia(userId, fileUid)
+    {
+        await this.pool.query(`
+                update media_of_users
+                set last_use_dt = current_timestamp
+                where user_id = $1
+                and file_uid = $2
+            `, [
+                userId, fileUid
+            ]);
     }
 }
 
