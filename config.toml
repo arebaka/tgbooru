@@ -1,0 +1,10 @@
+[bot]
+token = ""
+
+[params]
+
+[db]
+uri = "postgres://localhost/tgbooru"
+
+[limits]
+max_n_tags_for_media = 20

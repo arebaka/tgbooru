@@ -1,0 +1,76 @@
+---
+name: Your Personal Telegram Booru
+
+locale:
+  date: MM/DD/YYYY
+  time: h:mm A
+  datetime: MM/DD/YYYY h:mm A
+
+medias:
+  photo: image
+  animation: GIF
+  video: video
+
+errors:
+  default: Something went wrong!
+  unknown_callback: Unknown callback!
+
+list_of_commands: |-
+  /help to display all commands
+  /lang to change the language bot speaks
+  /add <tags...> to add a media to your booru
+  /delete to delete the media from your booru
+  /info to display some information about the media
+
+callbacks:
+  start:
+    responses:
+      no_lang: The lang not found!
+
+  lang:
+    responses:
+      no_lang: The lang not found!
+
+commands:
+  start:
+    responses:
+      ok: |-
+        Hello, I am {name}! I cat store your pictures, GIF and video by tags without the limit on the quantity and send them via inline requests.
+        To add a media to your booru, reply to it in PM or in any group with a command /add with a list of tags separated by space.
+        To remove the media from your booru, reply to it with a command /delete.
+        To display some information about the media, reply to it with a command /info.
+        Finally, to see all commands, send /help
+        Simple as that. I strongly advise against storing your real photos and other person's nudes here. Message @arelive about all bugs and suggestions.
+
+  help:
+    responses:
+      ok: "{commands}"
+
+  lang:
+    responses:
+      ok: Now I will speak English with you.
+
+  add:
+    responses:
+      ok: The {media} saved!
+      media_required: You need to reply to the media with this command!
+      tags_required: You need to set at least one tag!
+      media_exists: You have saved this {media} to your booru already!
+      too_many_tags: You can set a maximum of {limit} tags!
+
+  delete:
+    responses:
+      ok: The {media} deleted!
+      media_required: You need to reply to the media with this command!
+      no_media: There is no this {media} in your booru!
+
+  info:
+    responses:
+      ok: |-
+        The {media} saved `{date}`
+        It has theese tags:
+        ```
+        {tags}
+        ```
+      media_required: You need to reply to the media with this command!
+      no_media: There is no this {media} in your booru!
