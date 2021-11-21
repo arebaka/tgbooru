@@ -1,5 +1,5 @@
-# LenaBot
-*Всегда ненавидела эту суку!*
+# Telegram Booru
+*Maybe you meant: Unlimited Telegram Gallery*
 
 > A builtin personal inline booru for [Telegram](https://telegram.org).
 
