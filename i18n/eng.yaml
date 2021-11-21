@@ -24,6 +24,8 @@ list_of_commands: |-
   /replace <tags...> to replace all tags of the media
   /addtag <tags...> to add one or more tags of the media
   /deltag <tags...> to remove one or more tags from the media
+  /edittag <old> <new> to replace the any tag everywhere
+  /stats to display your summary
 
 inline:
   switch_pm: Nothing found

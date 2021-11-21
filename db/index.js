@@ -322,7 +322,7 @@ class DBHelper
         };
 
         res.n_medias = res.n_images + res.n_gifs + res.n_videos;
-        res.avg_tags = sum / res.n_medias;
+        res.avg_tags = sum / res.n_medias || 0;
 
         return res;
     }
