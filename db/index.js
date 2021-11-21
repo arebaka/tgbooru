@@ -273,14 +273,17 @@ class DBHelper
 
     async getStats(userId)
     {
-        let nMedias = await this.pool.query(`
+        const mediaCount = await this.pool.query(`
                 select type, count(*) as count
                 from media_of_users
                 where user_id = $1
                 group by type
             `, [userId]);
 
-        nMedias = nMedias.rows.reduce((a, v) => ({...a, [v.type]: v.count}));
+        let nMedias = {};
+        for (let row of mediaCount.rows) {
+            nMedias[row.type] = parseInt(row.count);
+        }
 
         const startDate = await this.pool.query(`
                 select add_dt
@@ -308,9 +311,9 @@ class DBHelper
         }
 
         let res = {
-            n_images: parseInt(nMedias.photo)     || 0,
-            n_gifs:   parseInt(nMedias.animation) || 0,
-            n_videos: parseInt(nMedias.video)     || 0,
+            n_images: nMedias.photo     || 0,
+            n_gifs:   nMedias.animation || 0,
+            n_videos: nMedias.video     || 0,
             n_tags:   tags.rows.length,
 
             start_date: startDate.rows.length ? startDate.rows[0].add_dt : 0,
