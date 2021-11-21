@@ -110,3 +110,26 @@ commands:
     responses:
       ok: The tag `{old}` was replaced to `{new}` everywhere.
       invalid_params: Invalid params! Set only two tags, old and new.
+
+  file:
+    responses:
+      media_required: You need to reply to the media with this command!
+      no_media: There is no this {media} in your booru!
+
+  stats:
+    responses:
+      ok: |-
+        Total `{n_medias}` media
+        ( images: `{n_images}` )
+        ( GIFs: `{n_gifs}` )
+        ( videos: `{n_videos}` )
+
+        `{n_tags}` unique tags
+        On average, one media has `{avg_tags}` tags
+
+        The first media was saved `{start_date}`
+
+        The most used tags:
+        ```
+        {most_used_tags}
+        ```

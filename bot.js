@@ -35,8 +35,7 @@ class Bot
         this.bot.command("addtag",  commands.addtag);
         this.bot.command("deltag",  commands.deltag);
         this.bot.command("edittag", commands.edittag);
-//        this.bot.command("stats",  commands.stats);
-
+        this.bot.command("stats",   commands.stats);
     }
 
     async start()

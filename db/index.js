@@ -270,6 +270,59 @@ class DBHelper
                 userId, fileUid
             ]);
     }
+
+    async getStats(userId)
+    {
+        let nMedias = await this.pool.query(`
+                select type, count(*) as count
+                from media_of_users
+                where user_id = $1
+                group by type
+            `, [userId]);
+
+        nMedias = nMedias.rows.reduce((a, v) => ({...a, [v.type]: v.count}));
+
+        const startDate = await this.pool.query(`
+                select add_dt
+                from media_of_users
+                where user_id = $1
+                order by add_dt
+                limit 1
+            `, [userId]);
+
+        const tags = await this.pool.query(`
+                select t.tag, count(tm.*) as count
+                from tags t
+                join tags_of_media tm
+                on tm.tag_id = t.id
+                join media_of_users mu
+                on mu.id = tm.media_id
+                where mu.user_id = $1
+                group by t.id
+                order by count desc
+            `, [userId]);
+
+        let sum = 0;
+        for (let tag of tags.rows) {
+            sum += parseInt(tag.count);
+        }
+
+        let res = {
+            n_images: parseInt(nMedias.photo)     || 0,
+            n_gifs:   parseInt(nMedias.animation) || 0,
+            n_videos: parseInt(nMedias.video)     || 0,
+            n_tags:   tags.rows.length,
+
+            start_date: startDate.rows.length ? startDate.rows[0].add_dt : 0,
+
+            most_used_tags: tags.rows.map(r => r.tag).slice(0, config.maxNStatsTags)
+        };
+
+        res.n_medias = res.n_images + res.n_gifs + res.n_videos;
+        res.avg_tags = sum / res.n_medias;
+
+        return res;
+    }
 }
 
 

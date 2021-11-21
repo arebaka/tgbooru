@@ -8,5 +8,6 @@ module.exports = {
 	replace: require("./replace"),
 	addtag:  require("./addtag"),
 	deltag:  require("./deltag"),
-	edittag: require("./edittag")
+	edittag: require("./edittag"),
+	stats:   require("./stats")
 };
