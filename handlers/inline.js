@@ -21,8 +21,14 @@ module.exports = async ctx => {
         }[m.type]]: m.file_id
     }));
 
-    ctx.answerInlineQuery(res, {
-        is_personal: true,
-        cache_time:  0
-    });
+    ctx.answerInlineQuery(res, res.length
+        ? {
+            is_personal: true,
+            cache_time:  0
+        } : {
+            is_personal: true,
+            cache_time:  0,
+            switch_pm_text:      ctx.from._.inline.switch_pm,
+            switch_pm_parameter: "start"
+        });
 };

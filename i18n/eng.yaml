@@ -26,7 +26,7 @@ list_of_commands: |-
   /deltag <tags...> to remove one or more tags from the media
 
 inline:
-  switch_pm: Settings
+  switch_pm: Nothing found
 
 callbacks:
   start:

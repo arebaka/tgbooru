@@ -26,7 +26,7 @@ list_of_commands: |-
   /deltag <теги...> – убрать один или несколько тегов у медиа
 
 inline:
-  switch_pm: Настройки
+  switch_pm: Ничего не найдено
 
 callbacks:
   start:
