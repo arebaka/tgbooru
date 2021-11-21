@@ -105,3 +105,8 @@ commands:
       media_required: You need to reply to the media with this command!
       no_media: There is no this {media} in your booru!
       tags_required: You need to set at least one tag!
+
+  edittag:
+    responses:
+      ok: The tag `{old}` was replaced to `{new}` everywhere.
+      invalid_params: Invalid params! Set only two tags, old and new.

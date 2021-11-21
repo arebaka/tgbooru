@@ -205,6 +205,23 @@ class DBHelper
         }
     }
 
+    async replaceTag(oldTag, newTag)
+    {
+        const replacement = await this._addTag(newTag);
+
+        await this.pool.query(`
+                update tags_of_media
+                set tag_id = $1
+                where tag_id = (
+                    select id
+                    from tags
+                    where tag = $2
+                )
+            `, [
+                replacement.id, oldTag
+            ]);
+    }
+
     async getAllMedias(userId, limit)
     {
         const medias = await this.pool.query(`

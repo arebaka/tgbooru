@@ -7,5 +7,6 @@ module.exports = {
 	info:    require("./info"),
 	replace: require("./replace"),
 	addtag:  require("./addtag"),
-	deltag:  require("./deltag")
+	deltag:  require("./deltag"),
+	edittag: require("./edittag")
 };

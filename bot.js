@@ -34,7 +34,7 @@ class Bot
         this.bot.command("replace", commands.replace);
         this.bot.command("addtag",  commands.addtag);
         this.bot.command("deltag",  commands.deltag);
-//        this.bot.command("retag",  commands.retag);
+        this.bot.command("edittag", commands.edittag);
 //        this.bot.command("stats",  commands.stats);
 
     }
