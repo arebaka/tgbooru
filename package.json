@@ -1,6 +1,6 @@
 {
   "name": "tgbooru",
-  "version": "0.6",
+  "version": "0.7",
   "description": "a builtin personal booru for Telegram",
   "bin": "./start.sh",
   "main": "index.js",

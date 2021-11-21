@@ -26,14 +26,14 @@ class Bot
 
         this.bot.start(commands.start)
 
-        this.bot.command("help",   commands.help);
-        this.bot.command("lang",   commands.lang);
-        this.bot.command("add",    commands.add);
-        this.bot.command("delete", commands.delete);
-        this.bot.command("info",   commands.info);
-//        this.bot.command("edit",   commands.edit);
-//        this.bot.command("addtag", commands.addtag);
-//        this.bot.command("deltag", commands.deltag);
+        this.bot.command("help",    commands.help);
+        this.bot.command("lang",    commands.lang);
+        this.bot.command("add",     commands.add);
+        this.bot.command("delete",  commands.delete);
+        this.bot.command("info",    commands.info);
+        this.bot.command("replace", commands.replace);
+        this.bot.command("addtag",  commands.addtag);
+        this.bot.command("deltag",  commands.deltag);
 //        this.bot.command("retag",  commands.retag);
 //        this.bot.command("stats",  commands.stats);
 

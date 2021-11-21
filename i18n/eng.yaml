@@ -21,6 +21,9 @@ list_of_commands: |-
   /add <tags...> to add a media to your booru
   /delete to delete the media from your booru
   /info to display some information about the media
+  /replace <tags...> to replace all tags of the media
+  /addtag <tags...> to add one or more tags of the media
+  /deltag <tags...> to remove one or more tags from the media
 
 inline:
   switch_pm: Settings
@@ -39,10 +42,12 @@ commands:
     responses:
       ok: |-
         Hello, I am {name}! I cat store your pictures, GIF and video by tags without the limit on the quantity and send them via inline requests.
+
         To add a media to your booru, reply to it in PM or in any group with a command /add with a list of tags separated by space.
         To remove the media from your booru, reply to it with a command /delete.
         To display some information about the media, reply to it with a command /info.
         Finally, to see all commands, send /help
+
         Simple as that. I strongly advise against storing your real photos and other person's nudes here. Message @arelive about all bugs and issues.
 
   help:
@@ -55,7 +60,7 @@ commands:
 
   add:
     responses:
-      ok: The {media} saved!
+      ok: The {media} saved.
       media_required: You need to reply to the media with this command!
       tags_required: You need to set at least one tag!
       media_exists: You have saved this {media} to your booru already!
@@ -63,7 +68,7 @@ commands:
 
   delete:
     responses:
-      ok: The {media} deleted!
+      ok: The {media} deleted.
       media_required: You need to reply to the media with this command!
       no_media: There is no this {media} in your booru!
 
@@ -77,3 +82,26 @@ commands:
         ```
       media_required: You need to reply to the media with this command!
       no_media: There is no this {media} in your booru!
+
+  replace:
+    responses:
+      ok: Tags of the {media} changed.
+      media_required: You need to reply to the media with this command!
+      no_media: There is no this {media} in your booru!
+      tags_required: You need to set at least one tag!
+      too_many_tags: You can set a maximum of {limit} tags!
+
+  addtag:
+    responses:
+      ok: New tags of the {media} added.
+      media_required: You need to reply to the media with this command!
+      no_media: There is no this {media} in your booru!
+      tags_required: You need to set at least one tag!
+      too_many_tags: You can set a maximum of {limit} tags!
+
+  deltag:
+    responses:
+      ok: The tags of the {media} removed.
+      media_required: You need to reply to the media with this command!
+      no_media: There is no this {media} in your booru!
+      tags_required: You need to set at least one tag!

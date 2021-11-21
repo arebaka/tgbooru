@@ -109,7 +109,7 @@ class DBHelper
         return media.rows.length ? media.rows[0] : null;
     }
 
-    async getMediaTags(mediaId)
+    async getMediaTags(id)
     {
         const tags = await this.pool.query(`
                 select t.tag
@@ -118,7 +118,7 @@ class DBHelper
                 on tm.tag_id = t.id
                 where tm.media_id = $1
                 order by tag
-            `, [mediaId]);
+            `, [id]);
 
         return tags.rows.map(t => t.tag);
     }
@@ -147,18 +147,35 @@ class DBHelper
         }
     }
 
-    async remMedia(userId, fileUid)
+    async remMedia(id)
     {
         await this.pool.query(`
                 delete from media_of_users
-                where user_id = $1
-                and file_uid = $2
-            `, [
-                userId, fileUid
-            ]);
+                where id = $1
+            `, [id]);
     }
 
-    async addMediaTags(mediaId, tags)
+    async editMedia(id, tags)
+    {
+        await this.pool.query(`
+                delete from tags_of_media
+                where media_id = $1
+            `, [id]);
+
+        for (let tag of tags) {
+            tag = await this._addTag(tag);
+
+            await this.pool.query(`
+                    insert into tags_of_media (media_id, tag_id)
+                    values ($1, $2)
+                    on conflict do nothing
+                `, [
+                    id, tag.id
+                ]);
+        }
+    }
+
+    async addMediaTags(id, tags)
     {
         for (let tag of tags) {
             tag = await this._addTag(tag);
@@ -168,12 +185,12 @@ class DBHelper
                     values ($1, $2)
                     on conflict do nothing
                 `, [
-                    mediaId, tag.id
+                    id, tag.id
                 ]);
         }
     }
 
-    async remMediaTags(mediaId, tags)
+    async remMediaTags(id, tags)
     {
         for (let tag of tags) {
             tag = await this._addTag(tag);
@@ -183,7 +200,7 @@ class DBHelper
                     where media_id = $1
                     and tag_id = $2
                 `, [
-                    mediaId, tag.id
+                    id, tag.id
                 ]);
         }
     }
