@@ -3,7 +3,7 @@ const dayjs = require("dayjs");
 const db = require("../db");
 
 module.exports = async ctx => {
-    const _ = ctx.from._.commands.stats;
+    const _ = ctx._.commands.stats;
 
     const stats = await db.getStats(ctx.from.id);
 
@@ -16,7 +16,7 @@ module.exports = async ctx => {
         .replace("{n_tags}",   stats.n_tags)
         .replace("{avg_tags}", stats.avg_tags.toFixed(1))
 
-        .replace("{start_date}", dayjs(stats.start_date).format(ctx.from._.locale.datetime))
+        .replace("{start_date}", dayjs(stats.start_date).format(ctx._.locale.datetime))
 
         .replace("{most_used_tags}", stats.most_used_tags.join('\n')));
 };

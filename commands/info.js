@@ -3,7 +3,7 @@ const dayjs = require("dayjs");
 const db = require("../db");
 
 module.exports = async ctx => {
-    const _       = ctx.from._.commands.info;
+    const _       = ctx._.commands.info;
     const replyTo = ctx.message.reply_to_message;
 
     if (!replyTo || !(replyTo.photo || replyTo.animation || replyTo.video))
@@ -15,14 +15,14 @@ module.exports = async ctx => {
 
     if (!media)
         return ctx.replyWithMarkdown(_.responses.no_media
-            .replace("{media}", ctx.from._.medias[type]));
+            .replace("{media}", ctx._.medias[type]));
 
     const tags = await db.getMediaTags(media.id);
 
     const date = dayjs(media.add_dt);
 
     ctx.replyWithMarkdown(_.responses.ok
-        .replace("{media}", ctx.from._.medias[type])
-        .replace("{date}",  date.format(ctx.from._.locale.datetime))
+        .replace("{media}", ctx._.medias[type])
+        .replace("{date}",  date.format(ctx._.locale.datetime))
         .replace("{tags}",  tags.join('\n')));
 };

@@ -2,10 +2,10 @@ const config = require("../config");
 const db     = require("../db");
 
 module.exports = async ctx => {
-    const _       = ctx.from._.commands.addtag;
+    const _       = ctx._.commands.addtag;
     const replyTo = ctx.message.reply_to_message;
     const tags    = ctx.message.text
-        .trim().split(' ').slice(1);
+        .trim().split(/\s+/).slice(1);
 
     if (!replyTo || !(replyTo.photo || replyTo.animation || replyTo.video))
         return ctx.replyWithMarkdown(_.responses.media_required);
@@ -21,7 +21,7 @@ module.exports = async ctx => {
 
     if (!media)
         return ctx.replyWithMarkdown(_.responses.no_media
-            .replace("{media}", ctx.from._.medias[type]));
+            .replace("{media}", ctx._.medias[type]));
 
     const currTags = await db.getMediaTags(media.id);
     if (currTags.length + tags.length > config.maxNTags)
@@ -31,5 +31,5 @@ module.exports = async ctx => {
     await db.addMediaTags(media.id, tags);
 
     ctx.replyWithMarkdown(_.responses.ok
-        .replace("{media}", ctx.from._.medias[type]));
+        .replace("{media}", ctx._.medias[type]));
 }

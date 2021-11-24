@@ -30,6 +30,12 @@ list_of_commands: |-
 inline:
   switch_pm: Ничего не найдено
 
+edited:
+  responses:
+    too_many_tags: Можно указать максимум {limit} тегов!
+    replaced: "{media} теперь с другими тегами."
+    added: "{media} теперь в твоей коллекции."
+
 callbacks:
   start:
     responses:

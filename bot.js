@@ -2,10 +2,12 @@ const Telegraf = require("telegraf").Telegraf;
 
 const db     = require("./db");
 const config = require("./config");
+const logger = require("./logger");
 
 const middlewares = require("./middlewares");
 const handlers    = require("./handlers");
 const commands    = require("./commands");
+const callbacks   = require("./callbacks");
 
 
 
@@ -20,9 +22,11 @@ class Bot
 
         this.bot.use(middlewares.updateUser);
 
-        this.bot.on("callback_query",       handlers.callback);
         this.bot.on("inline_query",         handlers.inline);
         this.bot.on("chosen_inline_result", handlers.chosen_inline);
+        this.bot.on("edited_message",       handlers.edited_message);
+
+        this.bot.on(["photo", "animation", "video"], handlers.media);
 
         this.bot.start(commands.start)
 
@@ -36,6 +40,9 @@ class Bot
         this.bot.command("deltag",  commands.deltag);
         this.bot.command("edittag", commands.edittag);
         this.bot.command("stats",   commands.stats);
+
+        this.bot.action(/^start:([^:]+)$/, callbacks.start);
+        this.bot.action(/^lang:([^:]+)$/,  callbacks.lang);
     }
 
     async start()
@@ -46,27 +53,29 @@ class Bot
             .launch(config.params)
             .then(res => {
                 this.username = this.bot.botInfo.username;
-                console.log(`Bot @${this.username} started.`);
+                logger.info(`Bot @${this.username} started.`);
             })
             .catch(err => {
-                console.error(err);
-                this.bot.stop();
+                logger.error(`${err.message} (${err.fileName}:${err.lineNumber})`);
             });
     }
 
     async stop()
     {
-        console.log(`Stop the bot @${this.username}`);
+        logger.info(`Stop the bot @${this.username}`);
 
-        this.bot.stop();
+        await this.bot.stop();
         await db.stop();
+
+        process.exit(0);
     }
 
     async reload()
     {
-        console.log(`Reload the bot @${this.username}`);
+        logger.info(`Reload the bot @${this.username}`);
 
-        await this.stop();
+        await this.bot.stop();
+        await db.stop();
         await this.start();
     }
 }

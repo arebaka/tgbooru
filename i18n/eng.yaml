@@ -30,6 +30,12 @@ list_of_commands: |-
 inline:
   switch_pm: Nothing found
 
+edited:
+  responses:
+    too_many_tags: You can set a maximum of {limit} tags!
+    replaced: Tags of the {media} changed.
+    added: The {media} saved.
+
 callbacks:
   start:
     responses:

@@ -1,7 +1,7 @@
 const db = require("../db");
 
 module.exports = async ctx => {
-    const _       = ctx.from._.commands.delete;
+    const _       = ctx._.commands.delete;
     const replyTo = ctx.message.reply_to_message;
 
     if (!replyTo || !(replyTo.photo || replyTo.animation || replyTo.video))
@@ -13,10 +13,10 @@ module.exports = async ctx => {
 
     if (!media)
         return ctx.replyWithMarkdown(_.responses.no_media
-            .replace("{media}", ctx.from._.medias[type]));
+            .replace("{media}", ctx._.medias[type]));
 
     await db.remMedia(media.id);
 
     ctx.replyWithMarkdown(_.responses.ok
-        .replace("{media}", ctx.from._.medias[type]));
+        .replace("{media}", ctx._.medias[type]));
 };

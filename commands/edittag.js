@@ -1,9 +1,9 @@
 const db = require("../db");
 
 module.exports = async ctx => {
-    const _      = ctx.from._.commands.edittag;
+    const _      = ctx._.commands.edittag;
     const params = ctx.message.text
-        .trim().split(' ').slice(1);
+        .trim().split(/\s+/).slice(1);
 
     if (params.length != 2)
        return ctx.replyWithMarkdown(_.responses.invalid_params);

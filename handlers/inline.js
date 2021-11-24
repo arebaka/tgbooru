@@ -28,7 +28,7 @@ module.exports = async ctx => {
         } : {
             is_personal: true,
             cache_time:  0,
-            switch_pm_text:      ctx.from._.inline.switch_pm,
+            switch_pm_text:      ctx._.inline.switch_pm,
             switch_pm_parameter: "start"
         });
 };
