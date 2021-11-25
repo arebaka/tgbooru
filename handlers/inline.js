@@ -18,7 +18,8 @@ module.exports = async ctx => {
             photo:     "photo_file_id",
             animation: "mpeg4_file_id",
             video:     "video_file_id"
-        }[m.type]]: m.file_id
+        }[m.type]]: m.file_id,
+        title: `${m.type} (${m.file_uid})`
     }));
 
     ctx.answerInlineQuery(res, res.length
