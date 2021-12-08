@@ -5,16 +5,9 @@ module.exports = async ctx => {
     const _       = ctx._.edited;
     let   message = ctx.update.edited_message;
 
-    if (ctx.chat.type != "private") return;
-    if (!message.caption && !message.text) return;
-
     if (message.text) {
-        if (!message.text.startsWith("/add") && !message.text.startsWith("/replace")) return;
-
         message = message.reply_to_message;
         message.caption = ctx.update.edited_message.text.replace(/^\/(add|replace)\s+/, "");
-
-        if (!message) return;
     }
 
     const tags = message.caption.trim().split(/\s+/g);

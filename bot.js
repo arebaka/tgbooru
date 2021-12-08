@@ -1,4 +1,4 @@
-const Telegraf = require("telegraf").Telegraf;
+const { Telegraf, Composer } = require("telegraf");
 
 const db     = require("./db");
 const config = require("./config");
@@ -12,7 +12,7 @@ const callbacks   = require("./callbacks");
 
 
 
-class Bot
+module.exports = class Bot
 {
     constructor(token)
     {
@@ -24,9 +24,20 @@ class Bot
 
         this.bot.on("inline_query",         handlers.inline);
         this.bot.on("chosen_inline_result", handlers.chosen_inline);
-        this.bot.on("edited_message",       handlers.edited_message);
 
-        this.bot.on(["photo", "animation", "video"], handlers.media);
+        this.bot.on("edited_message",
+            Composer.filter(ctx => ctx.chat.type == "private"
+                && (ctx.update.edited_message.caption || (
+                    ctx.update.edited_message.text
+                    && ctx.update.edited_message.reply_to_message && (
+                        ctx.update.edited_message.text.startsWith("/add")
+                        || ctx.update.edited_message.text.startsWith("/replace"))))),
+            handlers.edited_message);
+
+        this.bot.on(
+            ["photo", "animation", "video"],
+            Composer.filter(ctx => ctx.chat.type == "private" && ctx.message.caption),
+            handlers.media);
 
         this.bot.start(commands.start)
 
@@ -79,8 +90,3 @@ class Bot
         await this.start();
     }
 }
-
-
-
-
-module.exports = Bot;

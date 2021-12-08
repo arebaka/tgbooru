@@ -3,10 +3,6 @@ const db     = require("../db");
 
 module.exports = async ctx => {
     const _ = ctx._.commands.add;
-
-    if (ctx.chat.type != "private") return;
-    if (!ctx.message.caption) return;
-
     const tags = ctx.message.caption
         .trim().split(/\s+/g);
 
