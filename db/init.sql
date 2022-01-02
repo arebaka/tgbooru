@@ -1,36 +1,36 @@
 CREATE TYPE media_type as ENUM (
-    'photo',
-    'animation',
-    'video'
+	'photo',
+	'animation',
+	'video'
 );
 
 CREATE TABLE IF NOT EXISTS public.users (
-    id bigint NOT NULL PRIMARY KEY,
-    username character varying(32) DEFAULT NULL::character varying,
-    first_name character varying(256) NOT NULL,
-    last_name character varying(256) DEFAULT NULL::character varying,
-    lang CHARACTER(3) DEFAULT 'eng' NOT NULL
+	id bigint NOT NULL PRIMARY KEY,
+	username character varying(32) DEFAULT NULL::character varying,
+	first_name character varying(256) NOT NULL,
+	last_name character varying(256) DEFAULT NULL::character varying,
+	lang CHARACTER(3) DEFAULT 'eng' NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS public.tags (
-    id bigserial NOT NULL PRIMARY KEY,
-    tag char varying(4096) NOT NULL
+	id bigserial NOT NULL PRIMARY KEY,
+	tag char varying(4096) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS public.media_of_users (
-    id bigserial NOT NULL PRIMARY key,
-    user_id bigint NOT NULL,
-    type media_type NOT NULL,
-    file_uid character varying(32) NOT NULL,
-    file_id character varying(128) NOT NULL,
-    add_dt timestamp without time zone DEFAULT current_timestamp NOT NULL,
-    last_use_dt timestamp without time zone DEFAULT current_timestamp NOT NULL
+	id bigserial NOT NULL PRIMARY key,
+	user_id bigint NOT NULL,
+	type media_type NOT NULL,
+	file_uid character varying(32) NOT NULL,
+	file_id character varying(128) NOT NULL,
+	add_dt timestamp without time zone DEFAULT current_timestamp NOT NULL,
+	last_use_dt timestamp without time zone DEFAULT current_timestamp NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS public.tags_of_media (
-    id bigserial NOT NULL PRIMARY KEY,
-    media_id bigint NOT NULL,
-    tag_id bigint NOT NULL
+	id bigserial NOT NULL PRIMARY KEY,
+	media_id bigint NOT NULL,
+	tag_id bigint NOT NULL
 );
 
 CREATE UNIQUE INDEX IF NOT EXISTS tags_tag_uindex       ON public.tags          USING btree (tag);

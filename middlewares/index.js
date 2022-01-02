@@ -1,3 +1,3 @@
 module.exports = {
-    updateUser: require("./update_user")
+	updateUser: require("./update_user")
 };
