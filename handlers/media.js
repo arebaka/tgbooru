@@ -7,9 +7,9 @@ module.exports = async ctx => {
 		.trim().split(/\s+/g);
 
 	if (!tags.length) return;
-	if (tags.length > config.maxNTags)
+	if (tags.length > config.limits.max_n_tags)
 		return ctx.replyWithMarkdown(_.responses.too_many_tags
-			.replace("{limit}", config.maxNTags));
+			.replace("{limit}", config.limits.max_n_tags));
 
 	const type  = ["photo", "animation", "video"].find(t => ctx.message[t]);
 	const file  = type == "photo" ? ctx.message.photo.pop() : ctx.message[type];

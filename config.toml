@@ -1,12 +1,11 @@
 [bot]
-token = ""
-
-[params]
+token  = ""
+params = {}
 
 [db]
 uri = "postgres://localhost/tgbooru"
 
 [limits]
-max_n_tags_for_media = 20
-max_result_size      = 50
-max_n_stats_tags     = 20
+max_n_tags       = 20
+max_result_size  = 50
+max_n_stats_tags = 20

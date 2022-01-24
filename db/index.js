@@ -5,9 +5,6 @@ const pg   = require("pg");
 const config = require("../config");
 const logger = require("../logger");
 
-
-
-
 class DBHelper
 {
 	async _addTag(word)
@@ -32,7 +29,7 @@ class DBHelper
 	{
 		const sql = fs.readFileSync(path.resolve("db/init.sql"), "utf8").split(';');
 		this.pool = new pg.Pool({
-			connectionString: config.dbUri,
+			connectionString: config.db.uri,
 			max:              1
 		});
 
@@ -318,7 +315,7 @@ class DBHelper
 
 			start_date: startDate.rows.length ? startDate.rows[0].add_dt : 0,
 
-			most_used_tags: tags.rows.map(r => r.tag).slice(0, config.maxNStatsTags)
+			most_used_tags: tags.rows.map(r => r.tag).slice(0, config.limits.max_n_stats_tags)
 		};
 
 		res.n_medias = res.n_images + res.n_gifs + res.n_videos;
@@ -327,8 +324,5 @@ class DBHelper
 		return res;
 	}
 }
-
-
-
 
 module.exports = new DBHelper();

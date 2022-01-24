@@ -2,16 +2,9 @@ const path = require("path");
 const fs   = require("fs");
 const toml = require("toml");
 
-const config = toml.parse(fs.readFileSync(path.resolve("config.toml")));
+let config = toml.parse(fs.readFileSync(path.resolve("config.toml")));
 
+config.bot.token = process.env.TOKEN || config.bot.token,
+config.db.uri    = process.env.DBURI || config.db.uri;
 
-
-
-module.exports = {
-	token:         process.env.TOKEN || config.bot.token,
-	dbUri:         process.env.DBURI || config.db.uri,
-	maxNTags:      config.limits.max_n_tags_for_media,
-	maxResSize:    config.limits.max_result_size,
-	maxNStatsTags: config.limits.max_n_stats_tags,
-	params:        config.params
-};
+module.exports = config;

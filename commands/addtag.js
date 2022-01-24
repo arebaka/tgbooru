@@ -11,9 +11,9 @@ module.exports = async ctx => {
 		return ctx.replyWithMarkdown(_.responses.media_required);
 	if (!tags.length)
 		return ctx.replyWithMarkdown(_.responses.tags_required);
-	if (tags.length > config.maxNTags)
+	if (tags.length > config.limits.max_n_tags)
 		return ctx.replyWithMarkdown(_.responses.too_many_tags
-			.replace("{limit}", config.maxNTags));
+			.replace("{limit}", config.limits.max_n_tags));
 
 	const type  = ["photo", "animation", "video"].find(t => replyTo[t]);
 	const file  = type == "photo" ? replyTo.photo.pop() : replyTo[type];
@@ -24,9 +24,9 @@ module.exports = async ctx => {
 			.replace("{media}", ctx._.medias[type]));
 
 	const currTags = await db.getMediaTags(media.id);
-	if (currTags.length + tags.length > config.maxNTags)
+	if (currTags.length + tags.length > config.limits.max_n_tags)
 		return ctx.replyWithMarkdown(_.responses.too_many_tags
-			.replace("{limit}", config.maxNTags));
+			.replace("{limit}", config.limits.max_n_tags));
 
 	await db.addMediaTags(media.id, tags);
 

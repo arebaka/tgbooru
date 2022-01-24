@@ -8,8 +8,8 @@ module.exports = async ctx => {
 		? ctx.inlineQuery.query.trim().split(/\s+/) : [];
 
 	const medias = tags.length
-		? await db.findMedias(ctx.from.id, tags, config.maxResSize)
-		: await db.getAllMedias(ctx.from.id, config.maxResSize);
+		? await db.findMedias(ctx.from.id, tags, config.limits.max_result_size)
+		: await db.getAllMedias(ctx.from.id, config.limits.max_result_size);
 
 	const res = medias.map(m => ({
 		type: m.type == "animation" ? "mpeg4_gif" : m.type,
