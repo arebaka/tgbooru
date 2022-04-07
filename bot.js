@@ -1,4 +1,5 @@
-const { Telegraf, Composer } = require("telegraf");
+const Telegraf = require("telegraf").Telegraf;
+const Composer = require("telegraf").Composer;
 
 const db     = require("./db");
 const config = require("./config");

@@ -1,6 +1,6 @@
 {
   "name": "tgbooru",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "a builtin personal inline booru for Telegram",
   "bin": "./start.sh",
   "main": "index.js",
@@ -29,22 +29,6 @@
     "images",
     "gif",
     "video"
-  ],
-  "files": [
-    "LICENSE",
-    "README.md",
-    "config.toml",
-    "start.sh",
-    "index.js",
-    "config.js",
-    "logger.js",
-    "bot.js",
-    "db/*",
-    "middlewares/*",
-    "handlers/*",
-    "callbacks/*",
-    "commands/*",
-    "i18n/*"
   ],
   "dependencies": {
     "@arelive/logger": "^1.1.1",
